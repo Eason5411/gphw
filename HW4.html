@@ -201,7 +201,9 @@
     document.body.appendChild(renderer.domElement);
 
 
-
+    let textureLoder = new THREE.TextureLoader();
+	var wd = textureLoder.load('https://raw.githubusercontent.com/Eason5411/gphw/master/background.jpg');
+	scene.background = wd;
 
 
     ////////////////////////////////////////////////////////////////
@@ -338,7 +340,7 @@
       pucks[0].light.position.set(pucks[0].pos.x, pucks[0].pos.y+2, pucks[0].pos.z);
     
       collisionPaddle(twoLinkArm,pucks[0]);
-      collisionPaddle(twoLinkArm2,pucks[0]);
+      collisionPaddle2(twoLinkArm2,pucks[0]);
     
       twoLinkArm2.target.copy(twoLink2.worldToLocal(pucks[0].pos.clone()));
 
@@ -356,11 +358,11 @@
         );
 
         if (dis <= (Circle.radius+TwoLinkArm.radius)) {
-          puck.vel.sub(puck.pos.clone().sub(pp).multiplyScalar(puck.vel.clone().sub(twoLinkArm2.target.clone().multiplyScalar(-10))
+          puck.vel.sub(puck.pos.clone().sub(pp).multiplyScalar(puck.vel.clone().sub(twoLinkArm.target.clone().multiplyScalar(10))
               .dot(puck.pos.clone().sub(pp)) / ((Circle.radius+TwoLinkArm.radius)*(Circle.radius+TwoLinkArm.radius))));
       
         var ll = pp.clone().sub (puck.pos);
-        var lll = Math.sqrt(ll.x*ll.x+ll.y*ll.y+ll.z*ll.z);
+        var lll = Math.sqrt(ll.x*ll.x+ll.z*ll.z);
         var t = ll.normalize();
         var d = Circle.radius+TwoLinkArm.radius-lll;
         puck.pos.sub((t).multiplyScalar(d/2));
@@ -368,6 +370,29 @@
 
         }
     }
+	
+	function collisionPaddle2(twoLink,puck) {
+	  let pp=new THREE.Vector3();
+	  twoLink.paddle.getWorldPosition(pp);
+        var dis = Math.sqrt(
+          (pp.x - puck.pos.x) * (pp.x - puck.pos.x) +
+          (pp.z - puck.pos.z) * (pp.z - puck.pos.z)
+        );
+
+        if (dis <= (Circle.radius+TwoLinkArm.radius)) {
+          puck.vel.sub(puck.pos.clone().sub(pp).multiplyScalar(puck.vel.clone().sub(twoLinkArm2.target.clone().multiplyScalar(-10))
+              .dot(puck.pos.clone().sub(pp)) / ((Circle.radius+TwoLinkArm.radius)*(Circle.radius+TwoLinkArm.radius))));
+      
+        var ll = pp.clone().sub (puck.pos);
+        var lll = Math.sqrt(ll.x*ll.x+ll.z*ll.z);
+        var t = ll.normalize();
+        var d = Circle.radius+TwoLinkArm.radius-lll;
+        puck.pos.sub((t).multiplyScalar(d/2));
+      
+
+        }
+    }
+
 
     function update() {
       var thetas = [twoLinkArm.theta1, twoLinkArm.theta2];
