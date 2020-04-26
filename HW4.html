@@ -69,14 +69,14 @@
 
         this.link1 = new THREE.Object3D();
         let mesh = new THREE.Mesh (new THREE.BoxGeometry (10,2,1), new THREE.MeshPhongMaterial({color:0xD85790, opacity: 0.7, transparent: true}))
-        this.link1.add (mesh);
+        //this.link1.add (mesh);
         mesh.position.x = 5;
 
         twoLink.add (this.link1)
 
         this.link2 = new THREE.Object3D();
         let mesh2 = new THREE.Mesh (new THREE.BoxGeometry (10,2,1), new THREE.MeshPhongMaterial({color:0xD85790, opacity: 0.7, transparent: true}))
-        this.link2.add (mesh2);0xD85790
+        //this.link2.add (mesh2);0xD85790
         mesh2.position.x = 5;
 
         this.link1.add (this.link2)
